@@ -2,6 +2,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Scanner;
 
 public class DateUtil {
 	String mName;
@@ -83,7 +84,33 @@ public class DateUtil {
 		return (int) ((newerDate.getTime() - olderDate.getTime()) / (1000 * 60 * 60 * 24));
 	}
 	
-	public int dayOfWeek(int month, int day, int year) throws ParseException{
+	public int diffDate(String date1, String date2) throws ParseException {
+		Scanner sc = new Scanner(date1).useDelimiter("/");
+		int day1 = sc.nextInt();
+		int month1 = sc.nextInt();
+		int year1 = sc.nextInt();
+		Scanner s = new Scanner(date2).useDelimiter("/");
+		int day2 = sc.nextInt();
+		int month2 = sc.nextInt();
+		int year2 = sc.nextInt();
+		
+		
+		SimpleDateFormat newDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		Date olderDate = newDateFormat.parse(day1 + "/" + month1 + "/" + year1);
+		Date newerDate = newDateFormat.parse(day2 + "/" + month2 + "/" + year2);
+
+		return (int) ((newerDate.getTime() - olderDate.getTime()) / (1000 * 60 * 60 * 24));
+	}
+
+	public int diffDate(int month, int day, int year) throws ParseException {
+		SimpleDateFormat newDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		Date olderDate = newDateFormat.parse(day + "/" + month + "/" + year);
+		Date newerDate = newDateFormat.parse(newDateFormat.format(Calendar.getInstance().getTime()));
+
+		return (int) ((newerDate.getTime() - olderDate.getTime()) / (1000 * 60 * 60 * 24));
+	}
+
+	public int dayOfWeek(int month, int day, int year) throws ParseException {
 		SimpleDateFormat newDateFormat = new SimpleDateFormat("dd/MM/yyyy");
 		Date MyDate = newDateFormat.parse(day + "/" + month + "/" + year);
 		Calendar c = Calendar.getInstance();
@@ -91,14 +118,38 @@ public class DateUtil {
 		return c.get(Calendar.DAY_OF_WEEK);
 	}
 
-	public String toString(int month, int day, int year, String delimiter) {
-
-		return (String.format("%02d", month) + delimiter + String.format("%02d", day) + delimiter + year);
+	public int dayOfWeek(String date) throws ParseException {
+		Scanner sc = new Scanner(date).useDelimiter("/");
+		int day = sc.nextInt();
+		int month = sc.nextInt();
+		int year = sc.nextInt();
+		SimpleDateFormat newDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		Date MyDate = newDateFormat.parse(day + "/" + month + "/" + year);
+		Calendar c = Calendar.getInstance();
+		c.setTime(MyDate);
+		sc.close();
+		return c.get(Calendar.DAY_OF_WEEK);
 	}
 
 	public boolean isLeapYear(int year) {
 		if (year % 4 != 0 || (year % 100 == 0 && year % 400 != 0))
 			return false;
 		return true;
+	}
+
+	public Date now() {
+		Date date = Calendar.getInstance().getTime();
+		return date;
+	}
+
+	public String now(String format) {
+		Date date = Calendar.getInstance().getTime();
+		SimpleDateFormat sdf = new SimpleDateFormat(format);
+		return sdf.format(date);
+	}
+
+	public String toString(int month, int day, int year, String delimiter) {
+
+		return (String.format("%02d", month) + delimiter + String.format("%02d", day) + delimiter + year);
 	}
 }
