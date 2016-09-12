@@ -10,8 +10,13 @@ public class Test {
 			System.out.println(du.displayCalendar(2, 1990));
 			System.out.println("\n"+du.toString(2,25,1990,"/"));
 			
+			
+			
+			System.out.println("Difference in week: "+du.diffDate(2, 25, 1990, 2, 25,2090));
+			
+			System.out.println("Day of week: "+ du.dayOfWeek(2, 25, 1990));
+			
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
